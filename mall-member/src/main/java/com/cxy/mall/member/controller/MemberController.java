@@ -3,6 +3,7 @@ package com.cxy.mall.member.controller;
 import java.util.Arrays;
 import java.util.Map;
 
+import com.cxy.mall.member.feign.CouponFeignService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,6 +30,21 @@ import com.cxy.common.utils.R;
 public class MemberController {
     @Autowired
     private MemberService memberService;
+
+    @Autowired
+    CouponFeignService couponFeignService;
+
+    @RequestMapping("/coupons")
+    public R test(){
+        MemberEntity memberEntity = new MemberEntity();
+        memberEntity.setNickname("cxy");
+        R memberCoupon = couponFeignService.memberCoupon();
+
+        return R.ok().put("member",memberEntity).put("coupon",memberCoupon.get("coupon"));
+
+
+    }
+
 
     /**
      * 列表
