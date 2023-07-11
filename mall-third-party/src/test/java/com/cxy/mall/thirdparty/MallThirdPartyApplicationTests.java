@@ -22,10 +22,6 @@ class MallThirdPartyApplicationTests {
 
     @Test
     public void testUpload() throws FileNotFoundException {
-//        String endpoint = "oss-cn-chengdu.aliyuncs.com";
-//        String accessKeyId="LTAI5t7PT1Sf7STnkYSf7bZC";
-//        String accessKeySecret="3yaKsySEPS1wfTO3jY9Hn5l6wXwQxd";
-//        OSS ossClient = new OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret);
         FileInputStream inputStream = new FileInputStream("C:\\Users\\chenxinyi\\Pictures\\Saved Pictures\\2.JPG");
         Date date = new Date();//获取当前的日期
         SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");//设置日期格式
