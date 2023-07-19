@@ -1,15 +1,14 @@
 package com.cxy.mall.product.controller;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
+import com.cxy.mall.product.entity.AttrEntity;
+import com.cxy.mall.product.service.AttrService;
 import com.cxy.mall.product.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.cxy.mall.product.entity.AttrGroupEntity;
 import com.cxy.mall.product.service.AttrGroupService;
@@ -34,6 +33,9 @@ public class AttrGroupController {
     @Autowired
     private CategoryService categoryService;
 
+    @Autowired
+    private AttrService attrService;
+
     /**
      * 列表
      */
@@ -46,6 +48,13 @@ public class AttrGroupController {
         return R.ok().put("page", page);
     }
 
+    ///product/attrgroup/{attrgroupId}/attr/relation
+    @GetMapping("/{attrgroupId}/attr/relation")
+    //@RequiresPermissions("product:attrgroup:list")
+    public R attrRelation(@PathVariable("attrgroupId") Long attrgroupId) {
+        List<AttrEntity> list = attrService.getRelationAttr(attrgroupId);
+        return R.ok().put("data", list);
+    }
 
     /**
      * 信息

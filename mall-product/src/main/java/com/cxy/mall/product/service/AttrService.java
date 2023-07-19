@@ -6,6 +6,7 @@ import com.cxy.mall.product.entity.AttrEntity;
 import com.cxy.mall.product.vo.AttrRespVo;
 import com.cxy.mall.product.vo.AttrVo;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -27,5 +28,7 @@ public interface AttrService extends IService<AttrEntity> {
     void updateAttr(AttrVo attr);
 
     PageUtils queryPage(Map<String, Object> params, Long catelogId);
+
+    List<AttrEntity> getRelationAttr(Long attrgroupId);
 }
 
