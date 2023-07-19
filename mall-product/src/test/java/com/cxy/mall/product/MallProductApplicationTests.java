@@ -1,21 +1,23 @@
 package com.cxy.mall.product;
 
-import com.aliyun.oss.OSS;
-import com.aliyun.oss.OSSClient;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.cxy.mall.product.dao.AttrAttrgroupRelationDao;
+import com.cxy.mall.product.entity.AttrAttrgroupRelationEntity;
 import com.cxy.mall.product.entity.BrandEntity;
 import com.cxy.mall.product.service.BrandService;
+import com.cxy.mall.product.service.CategoryService;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import javax.annotation.Resource;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.Arrays;
 import java.util.List;
 
+@Slf4j
 @RunWith(SpringRunner.class)
 @SpringBootTest
 class MallProductApplicationTests {
@@ -25,7 +27,13 @@ class MallProductApplicationTests {
     BrandService brandService;
 
     @Autowired
-    private OSS ossClient;
+    AttrAttrgroupRelationDao relationDao;
+
+//    @Autowired
+//    private OSS ossClient;
+
+    @Autowired
+    CategoryService categoryService;
 
     @Test
     public void testUpload() throws FileNotFoundException {
@@ -33,10 +41,26 @@ class MallProductApplicationTests {
 //        String accessKeyId="LTAI5t7PT1Sf7STnkYSf7bZC";
 //        String accessKeySecret="3yaKsySEPS1wfTO3jY9Hn5l6wXwQxd";
 //        OSS ossClient = new OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret);
-        FileInputStream inputStream = new FileInputStream("C:\\Users\\chenxinyi\\Pictures\\Saved Pictures\\2.JPG");
-        ossClient.putObject("gulimall-snowcying","bug3.JPG",inputStream);
-        ossClient.shutdown();
-        System.out.println("上传完成...");
+//        FileInputStream inputStream = new FileInputStream("C:\\Users\\chenxinyi\\Pictures\\Saved Pictures\\2.JPG");
+//        ossClient.putObject("gulimall-snowcying","bug3.JPG",inputStream);
+//        ossClient.shutdown();
+//        System.out.println("上传完成...");
+    }
+
+    @Test
+    public void testFindPaths() {
+        Long[] catelogPath = categoryService.findCatelogPath(225L);
+        log.info("完整路径:{}", Arrays.asList(catelogPath));
+
+    }
+
+    @Test
+    public void testSaveAttrAttrGroup() {
+        AttrAttrgroupRelationEntity attrAttrgroupRelationEntity = new AttrAttrgroupRelationEntity();
+        attrAttrgroupRelationEntity.setAttrId(10L);
+        attrAttrgroupRelationEntity.setAttrGroupId(9L);
+        relationDao.insert(attrAttrgroupRelationEntity);
+
     }
 
     @Test

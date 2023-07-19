@@ -1,28 +1,60 @@
 package com.cxy.mall.product.service.impl;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cxy.common.utils.PageUtils;
 import com.cxy.common.utils.Query;
-
 import com.cxy.mall.product.dao.CategoryDao;
 import com.cxy.mall.product.entity.CategoryEntity;
+import com.cxy.mall.product.service.CategoryBrandRelationService;
 import com.cxy.mall.product.service.CategoryService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 
 @Service("categoryService")
 public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity> implements CategoryService {
+    @Autowired
+    CategoryBrandRelationService categoryBrandRelationService;
+
     @Override
     public void removeMenuByIds(List<Long> asList) {
         baseMapper.deleteBatchIds(asList);
+
+    }
+
+    @Override
+    public Long[] findCatelogPath(Long catelogId) {
+        List<Long> paths = new ArrayList<>();
+        List<Long> parentPath = findParentPath(catelogId, paths);
+        Collections.reverse(parentPath);
+        return parentPath.toArray(new Long[parentPath.size()]);
+    }
+
+    // 更新冗余的表 法2
+    @Transactional
+    @Override
+    public void updateCascade(CategoryEntity category) {
+        this.updateById(category);
+        categoryBrandRelationService.updateCategory(category.getCatId(), category.getName());
+
+    }
+
+    private List<Long> findParentPath(Long catelogId, List<Long> paths) {
+        paths.add(catelogId);
+        CategoryEntity byId = this.getById(catelogId);
+        if (byId.getParentCid() != 0) {
+            findParentPath(byId.getParentCid(), paths);
+        }
+        return paths;
 
     }
 
@@ -33,8 +65,8 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
                 .filter(categoryEntity -> {
                     return categoryEntity.getParentCid() == 0;
                 })
-                .map(menu->{
-                    menu.setChildren(getChildren(menu,categoryEntities));
+                .map(menu -> {
+                    menu.setChildren(getChildren(menu, categoryEntities));
                     return menu;
                 })
                 .sorted((menu1,menu2)->{
