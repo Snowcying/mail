@@ -37,14 +37,7 @@ class MallProductApplicationTests {
 
     @Test
     public void testUpload() throws FileNotFoundException {
-//        String endpoint = "oss-cn-chengdu.aliyuncs.com";
-//        String accessKeyId="LTAI5t7PT1Sf7STnkYSf7bZC";
-//        String accessKeySecret="3yaKsySEPS1wfTO3jY9Hn5l6wXwQxd";
-//        OSS ossClient = new OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret);
-//        FileInputStream inputStream = new FileInputStream("C:\\Users\\chenxinyi\\Pictures\\Saved Pictures\\2.JPG");
-//        ossClient.putObject("gulimall-snowcying","bug3.JPG",inputStream);
-//        ossClient.shutdown();
-//        System.out.println("上传完成...");
+
     }
 
     @Test
