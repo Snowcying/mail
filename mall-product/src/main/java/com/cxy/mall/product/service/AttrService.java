@@ -3,6 +3,7 @@ package com.cxy.mall.product.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.cxy.common.utils.PageUtils;
 import com.cxy.mall.product.entity.AttrEntity;
+import com.cxy.mall.product.vo.AttrGroupRelationVo;
 import com.cxy.mall.product.vo.AttrRespVo;
 import com.cxy.mall.product.vo.AttrVo;
 
@@ -30,5 +31,9 @@ public interface AttrService extends IService<AttrEntity> {
     PageUtils queryPage(Map<String, Object> params, Long catelogId);
 
     List<AttrEntity> getRelationAttr(Long attrgroupId);
+
+    void deleteRelation(AttrGroupRelationVo[] vos);
+
+    PageUtils getNoRelationAttr(Map<String, Object> params, Long attrGroupId);
 }
 
