@@ -2,6 +2,7 @@ package com.cxy.mall.product.controller;
 
 import com.cxy.common.utils.PageUtils;
 import com.cxy.common.utils.R;
+import com.cxy.mall.product.entity.AttrAttrgroupRelationEntity;
 import com.cxy.mall.product.entity.AttrEntity;
 import com.cxy.mall.product.entity.AttrGroupEntity;
 import com.cxy.mall.product.service.AttrAttrgroupRelationService;
@@ -9,6 +10,7 @@ import com.cxy.mall.product.service.AttrGroupService;
 import com.cxy.mall.product.service.AttrService;
 import com.cxy.mall.product.service.CategoryService;
 import com.cxy.mall.product.vo.AttrGroupRelationVo;
+import com.cxy.mall.product.vo.GroupWithAttr;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,6 +41,18 @@ public class AttrGroupController {
 
     @Autowired
     private AttrAttrgroupRelationService relationService;
+
+    // api/product/attrgroup/225/withattr
+    @RequestMapping("/{catelogId}/withattr")
+    public R getWithAttr(@PathVariable("catelogId") Long catelogId) {
+
+        List<AttrGroupEntity> groupEntities = attrGroupService.getGroupIdsByCatelogId(catelogId);
+        List<List<AttrAttrgroupRelationEntity>> attrIds = relationService.getAttrIdsByGroupIds(groupEntities);
+        List<GroupWithAttr> data = attrService.getListByIds(attrIds);
+
+
+        return R.ok().put("data", data);
+    }
 
     /**
      * 列表

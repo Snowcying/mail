@@ -3,6 +3,7 @@ package com.cxy.mall.product.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.cxy.common.utils.PageUtils;
 import com.cxy.mall.product.entity.AttrAttrgroupRelationEntity;
+import com.cxy.mall.product.entity.AttrGroupEntity;
 import com.cxy.mall.product.vo.AttrGroupRelationVo;
 
 import java.util.List;
@@ -20,5 +21,7 @@ public interface AttrAttrgroupRelationService extends IService<AttrAttrgroupRela
     PageUtils queryPage(Map<String, Object> params);
 
     void addRelation(List<AttrGroupRelationVo> vos);
+
+    List<List<AttrAttrgroupRelationEntity>> getAttrIdsByGroupIds(List<AttrGroupEntity> groupEntities);
 }
 
