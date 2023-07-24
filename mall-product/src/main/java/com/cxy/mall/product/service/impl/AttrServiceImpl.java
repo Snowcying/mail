@@ -26,10 +26,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 
@@ -264,19 +261,33 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
     @Override
     public List<GroupWithAttr> getListByIds(List<List<AttrAttrgroupRelationEntity>> attrIds) {
         List<GroupWithAttr> ans = attrIds.stream().map(item -> {
-            List<AttrVo> collect = item.stream().map(item2 -> {
-                Long attrId = item2.getAttrId();
+            List<AttrVo> listAttrVo = new ArrayList<>();
+            for (AttrAttrgroupRelationEntity obj : item) {
+                Long attrId = obj.getAttrId();
                 AttrEntity attrEntity = this.baseMapper.selectById(attrId);
                 AttrVo attrVo = new AttrVo();
-                BeanUtils.copyProperties(attrEntity, attrVo);
-                attrVo.setAttrGroupId(item2.getAttrGroupId());
-                return attrVo;
-//                return item2.getAttrId();
-            }).collect(Collectors.toList());
+                if (attrEntity != null) {
+                    BeanUtils.copyProperties(attrEntity, attrVo);
+                    attrVo.setAttrGroupId(obj.getAttrGroupId());
+                    listAttrVo.add(attrVo);
+                }
+            }
+//            List<AttrVo> collect = item.stream().map(item2 -> {
+//                Long attrId = item2.getAttrId();
+//                AttrEntity attrEntity = this.baseMapper.selectById(attrId);
+//                AttrVo attrVo = new AttrVo();
+//                if (attrEntity != null) {
+//                    BeanUtils.copyProperties(attrEntity, attrVo);
+//                    attrVo.setAttrGroupId(item2.getAttrGroupId());
+//                    return attrVo;
+//                }
+//
+////                return item2.getAttrId();
+//            }).collect(Collectors.toList());
             AttrGroupEntity attrGroupEntity = attrGroupDao.selectById(item.get(0).getAttrGroupId());
             GroupWithAttr groupWithAttr = new GroupWithAttr();
             BeanUtils.copyProperties(attrGroupEntity, groupWithAttr);
-            groupWithAttr.setAttrs(collect);
+            groupWithAttr.setAttrs(listAttrVo);
             return groupWithAttr;
         }).collect(Collectors.toList());
         return ans;
