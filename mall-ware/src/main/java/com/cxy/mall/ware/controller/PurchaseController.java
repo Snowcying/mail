@@ -1,14 +1,14 @@
 package com.cxy.mall.ware.controller;
 
 import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
+import com.cxy.mall.ware.vo.MergeVo;
+import com.cxy.mall.ware.vo.PurchaseDoneVo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.cxy.mall.ware.entity.PurchaseEntity;
 import com.cxy.mall.ware.service.PurchaseService;
@@ -30,12 +30,46 @@ public class PurchaseController {
     @Autowired
     private PurchaseService purchaseService;
 
+    @PostMapping("/done")
+    //@RequiresPermissions("ware:purchase:list")
+    public R finish(@RequestBody PurchaseDoneVo purchaseDoneVo) {
+        purchaseService.done(purchaseDoneVo);
+        return R.ok();
+    }
+
+    // /ware/purchase/received
+    @PostMapping("/received")
+    //@RequiresPermissions("ware:purchase:list")
+    public R received(@RequestBody List<Long> ids) {
+        purchaseService.received(ids);
+        return R.ok();
+    }
+
+
+    // /ware/purchase/unreceive/list
+    @RequestMapping("/unreceive/list")
+    //@RequiresPermissions("ware:purchase:list")
+    public R unreceiveList(@RequestParam Map<String, Object> params) {
+        PageUtils page = purchaseService.queryPageInreceive(params);
+
+        return R.ok().put("page", page);
+    }
+
+
+    // /ware/purchase/merge
+    @PostMapping("/merge")
+    //@RequiresPermissions("ware:purchase:list")
+    public R merge(@RequestBody MergeVo mergeVo) {
+        purchaseService.mergePurchase(mergeVo);
+        return R.ok();
+    }
+
     /**
      * 列表
      */
     @RequestMapping("/list")
     //@RequiresPermissions("ware:purchase:list")
-    public R list(@RequestParam Map<String, Object> params){
+    public R list(@RequestParam Map<String, Object> params) {
         PageUtils page = purchaseService.queryPage(params);
 
         return R.ok().put("page", page);
@@ -58,8 +92,10 @@ public class PurchaseController {
      */
     @RequestMapping("/save")
     //@RequiresPermissions("ware:purchase:save")
-    public R save(@RequestBody PurchaseEntity purchase){
-		purchaseService.save(purchase);
+    public R save(@RequestBody PurchaseEntity purchase) {
+        purchase.setCreateTime(new Date());
+        purchase.setUpdateTime(new Date());
+        purchaseService.save(purchase);
 
         return R.ok();
     }
