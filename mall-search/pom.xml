@@ -7,14 +7,26 @@
     <version>0.0.1-SNAPSHOT</version>
     <name>mall-search</name>
     <description>mall-search</description>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <!-- 这里我的springboot的版本使用是2.3.2 -->
+        <version>2.1.8.RELEASE</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
     <properties>
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <spring-boot.version>2.2.2.RELEASE</spring-boot.version>
+        <!--        <spring-boot.version>2.2.2.RELEASE</spring-boot.version>-->
         <elasticsearch.version>7.4.2</elasticsearch.version>
     </properties>
     <dependencies>
+        <dependency>
+            <groupId>com.cxy.mail</groupId>
+            <artifactId>mall-common</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -30,18 +42,24 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>5.8.1</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-dependencies</artifactId>
-                <version>${spring-boot.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
+    <!--    <dependencyManagement>-->
+    <!--        <dependencies>-->
+    <!--            <dependency>-->
+    <!--                <groupId>org.springframework.boot</groupId>-->
+    <!--                <artifactId>spring-boot-dependencies</artifactId>-->
+    <!--                <version>${spring-boot.version}</version>-->
+    <!--                <type>pom</type>-->
+    <!--                <scope>import</scope>-->
+    <!--            </dependency>-->
+    <!--        </dependencies>-->
+    <!--    </dependencyManagement>-->
 
     <build>
         <plugins>
@@ -58,7 +76,7 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>${spring-boot.version}</version>
+                <!--                <version>${spring-boot.version}</version>-->
                 <configuration>
                     <mainClass>com.cxy.mall.search.MallSearchApplication</mainClass>
                     <skip>true</skip>
@@ -66,9 +84,9 @@
                 <executions>
                     <execution>
                         <id>repackage</id>
-                        <!--                        <goals>-->
-                        <!--                            <goal>repackage</goal>-->
-                        <!--                        </goals>-->
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
                     </execution>
                 </executions>
             </plugin>
