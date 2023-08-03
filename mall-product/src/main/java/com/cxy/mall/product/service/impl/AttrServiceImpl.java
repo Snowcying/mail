@@ -293,4 +293,12 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
         return ans;
     }
 
+    @Override
+    public List<Long> selectSearchAttrs(List<Long> attrIds) {
+
+//        this.baseMapper.selectBatchIds()  select attr_id from `pms_attr` where attr_id in #{?} and search_type=1
+        List<Long> ans = baseMapper.selectSearchAttrs(attrIds);
+        return ans;
+    }
+
 }

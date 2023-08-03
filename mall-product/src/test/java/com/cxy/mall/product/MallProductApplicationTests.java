@@ -5,6 +5,7 @@ import com.cxy.mall.product.dao.AttrAttrgroupRelationDao;
 import com.cxy.mall.product.entity.AttrAttrgroupRelationEntity;
 import com.cxy.mall.product.entity.AttrGroupEntity;
 import com.cxy.mall.product.entity.BrandEntity;
+import com.cxy.mall.product.entity.SkuInfoEntity;
 import com.cxy.mall.product.service.*;
 import com.cxy.mall.product.vo.GroupWithAttr;
 import lombok.extern.slf4j.Slf4j;
@@ -15,10 +16,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.FileNotFoundException;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Slf4j
 @RunWith(SpringRunner.class)
@@ -49,6 +47,10 @@ class MallProductApplicationTests {
 
     @Autowired
     AttrService attrService;
+
+    @Autowired
+    SkuInfoService skuInfoService;
+
 
     @Test
     public void testUpload() throws FileNotFoundException {
@@ -103,5 +105,22 @@ class MallProductApplicationTests {
         List<GroupWithAttr> data = attrService.getListByIds(attrIds);
     }
 
+    @Test
+    void getSkuBySpu() {
+        Long id = 11L;
+        List<SkuInfoEntity> skusBySpuId = skuInfoService.getSkusBySpuId(id);
+        log.info(skusBySpuId.toString());
+    }
 
+    @Test
+    void selectSearchAttrs() {
+        List<Long> ids = Arrays.asList(7L,
+                8L,
+                13L,
+                14L,
+                15L,
+                16L);
+        List<Long> longs = attrService.selectSearchAttrs(ids);
+        log.info(longs.toString());
+    }
 }

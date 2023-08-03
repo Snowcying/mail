@@ -60,6 +60,11 @@ public class MallSearchApplicationTests {
         System.out.println(index);
     }
 
+    @Test
+    public void testGet() {
+
+    }
+
     @Data
     class User {
         private String userName;
