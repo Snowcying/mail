@@ -1,4 +1,4 @@
-package com.cxy.mall.product.controller;
+package com.cxy.mall.product.app;
 
 import java.util.Arrays;
 import java.util.Map;
@@ -10,33 +10,33 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.cxy.mall.product.entity.UndoLogEntity;
-import com.cxy.mall.product.service.UndoLogService;
+import com.cxy.mall.product.entity.SkuImagesEntity;
+import com.cxy.mall.product.service.SkuImagesService;
 import com.cxy.common.utils.PageUtils;
 import com.cxy.common.utils.R;
 
 
 
 /**
- * 
+ * sku图片
  *
  * @author cxy
  * @email sunlightcs@gmail.com
  * @date 2023-06-20 21:42:00
  */
 @RestController
-@RequestMapping("product/undolog")
-public class UndoLogController {
+@RequestMapping("product/skuimages")
+public class SkuImagesController {
     @Autowired
-    private UndoLogService undoLogService;
+    private SkuImagesService skuImagesService;
 
     /**
      * 列表
      */
     @RequestMapping("/list")
-    //@RequiresPermissions("product:undolog:list")
+    //@RequiresPermissions("product:skuimages:list")
     public R list(@RequestParam Map<String, Object> params){
-        PageUtils page = undoLogService.queryPage(params);
+        PageUtils page = skuImagesService.queryPage(params);
 
         return R.ok().put("page", page);
     }
@@ -46,20 +46,20 @@ public class UndoLogController {
      * 信息
      */
     @RequestMapping("/info/{id}")
-    //@RequiresPermissions("product:undolog:info")
+    //@RequiresPermissions("product:skuimages:info")
     public R info(@PathVariable("id") Long id){
-		UndoLogEntity undoLog = undoLogService.getById(id);
+		SkuImagesEntity skuImages = skuImagesService.getById(id);
 
-        return R.ok().put("undoLog", undoLog);
+        return R.ok().put("skuImages", skuImages);
     }
 
     /**
      * 保存
      */
     @RequestMapping("/save")
-    //@RequiresPermissions("product:undolog:save")
-    public R save(@RequestBody UndoLogEntity undoLog){
-		undoLogService.save(undoLog);
+    //@RequiresPermissions("product:skuimages:save")
+    public R save(@RequestBody SkuImagesEntity skuImages){
+		skuImagesService.save(skuImages);
 
         return R.ok();
     }
@@ -68,9 +68,9 @@ public class UndoLogController {
      * 修改
      */
     @RequestMapping("/update")
-    //@RequiresPermissions("product:undolog:update")
-    public R update(@RequestBody UndoLogEntity undoLog){
-		undoLogService.updateById(undoLog);
+    //@RequiresPermissions("product:skuimages:update")
+    public R update(@RequestBody SkuImagesEntity skuImages){
+		skuImagesService.updateById(skuImages);
 
         return R.ok();
     }
@@ -79,9 +79,9 @@ public class UndoLogController {
      * 删除
      */
     @RequestMapping("/delete")
-    //@RequiresPermissions("product:undolog:delete")
+    //@RequiresPermissions("product:skuimages:delete")
     public R delete(@RequestBody Long[] ids){
-		undoLogService.removeByIds(Arrays.asList(ids));
+		skuImagesService.removeByIds(Arrays.asList(ids));
 
         return R.ok();
     }

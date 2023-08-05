@@ -1,10 +1,9 @@
-package com.cxy.mall.product.controller;
+package com.cxy.mall.product.app;
 
 import java.util.Arrays;
 import java.util.Map;
 
 import com.cxy.mall.product.vo.SpuSaveVo;
-import oracle.jdbc.proxy.annotation.Post;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

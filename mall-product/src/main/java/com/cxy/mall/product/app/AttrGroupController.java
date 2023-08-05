@@ -1,4 +1,4 @@
-package com.cxy.mall.product.controller;
+package com.cxy.mall.product.app;
 
 import com.cxy.common.utils.PageUtils;
 import com.cxy.common.utils.R;

@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import java.util.HashMap;
 
 @Slf4j
-//@ControllerAdvice(basePackages = "com.cxy.mall.product.controller")
+//@ControllerAdvice(basePackages = "com.cxy.mall.product.app")
 //@ResponseBody
-@RestControllerAdvice(basePackages = "com.cxy.mall.product.controller")
+@RestControllerAdvice(basePackages = "com.cxy.mall.product.app")
 public class mallExceptionControllerAdvice {
 
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
