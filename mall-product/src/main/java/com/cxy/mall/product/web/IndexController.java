@@ -28,7 +28,9 @@ public class IndexController {
     @GetMapping("/index/catalog.json")
     public Map<String, List<Catelog2Vo>> getCatelogJson() {
         //before 吞吐量14
-        //after 吞吐量510
+        //after 吞吐量457
+        //本地缓存 7700
+        //redis 700
         Map<String, List<Catelog2Vo>> map = categoryService.getCatalogJson();
         return map;
     }
