@@ -3,6 +3,8 @@ package com.cxy.mall.product.web;
 import com.cxy.mall.product.entity.CategoryEntity;
 import com.cxy.mall.product.service.CategoryService;
 import com.cxy.mall.product.vo.Catelog2Vo;
+import org.redisson.api.RLock;
+import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +18,9 @@ import java.util.Map;
 public class IndexController {
     @Autowired
     CategoryService categoryService;
+
+    @Autowired
+    RedissonClient redisson;
 
     @GetMapping({"/", "/index.html"})
     public String indexPage(Model model) {
@@ -33,5 +38,22 @@ public class IndexController {
         //redis 700
         Map<String, List<Catelog2Vo>> map = categoryService.getCatalogJson();
         return map;
+    }
+
+    @ResponseBody
+    @GetMapping("/hello")
+    public String hello() {
+        RLock lock = redisson.getLock("my-lock");
+        lock.lock();
+        try {
+            System.out.println("加锁成功,执行业务" + Thread.currentThread().getId());
+            Thread.sleep(30000);
+        } catch (Exception e) {
+        } finally {
+            System.out.println("释放锁" + Thread.currentThread().getId());
+            lock.unlock();
+        }
+
+        return "hello";
     }
 }
