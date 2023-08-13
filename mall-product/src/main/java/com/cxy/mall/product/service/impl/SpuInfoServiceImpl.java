@@ -274,7 +274,7 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
             esModel.setBrandName(brand.getName());
             esModel.setBrandImg(brand.getLogo());
             CategoryEntity category = categoryService.getById(esModel.getCatalogId());
-            esModel.setCatelogName(category.getName());
+            esModel.setCatalogName(category.getName());
             esModel.setAttrs(attrsList);
             esModel.setHotScore(0L);
             if (finalStockMap == null) {
