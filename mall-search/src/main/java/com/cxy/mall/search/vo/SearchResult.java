@@ -3,6 +3,7 @@ package com.cxy.mall.search.vo;
 import com.cxy.common.to.es.SkuEsModel;
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -16,6 +17,7 @@ public class SearchResult {
     private List<BrandVo> brands;
     private List<AttrVo> attrs;
     private List<CatalogVo> catalogs;
+    private List<Integer> pageNavs;
 
     @Data
     public static class BrandVo {
@@ -36,4 +38,16 @@ public class SearchResult {
         private Long catalogId;
         private String catalogName;
     }
+
+    //面包屑导航数据
+    private List<NavVo> navs = new ArrayList<>();
+
+    @Data
+    public static class NavVo {
+        private String navName;
+        private String navValue;
+        private String link;
+    }
+
+    private List<Long> attrIds = new ArrayList<>();
 }
