@@ -2,12 +2,16 @@ package com.cxy.mall.product;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.cxy.mall.product.dao.AttrAttrgroupRelationDao;
+import com.cxy.mall.product.dao.AttrGroupDao;
+import com.cxy.mall.product.dao.SkuSaleAttrValueDao;
 import com.cxy.mall.product.entity.AttrAttrgroupRelationEntity;
 import com.cxy.mall.product.entity.AttrGroupEntity;
 import com.cxy.mall.product.entity.BrandEntity;
 import com.cxy.mall.product.entity.SkuInfoEntity;
 import com.cxy.mall.product.service.*;
 import com.cxy.mall.product.vo.GroupWithAttr;
+import com.cxy.mall.product.vo.SkuItemVo;
+import com.cxy.mall.product.vo.SpuItemAttrGroupVo;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -59,6 +63,21 @@ class MallProductApplicationTests {
 
     @Autowired
     RedissonClient redissonClient;
+
+    @Autowired
+    AttrGroupDao attrGroupDao;
+
+    @Autowired
+    SkuSaleAttrValueDao skuSaleAttrValueDao;
+
+    @Test
+    public void testMyBs() {
+//        System.out.println("hello");
+//        List<SpuItemAttrGroupVo> attrGroupWithAttrsBySpuId = attrGroupDao.getAttrGroupWithAttrsBySpuId(13L, 225L);
+//        System.out.println(attrGroupWithAttrsBySpuId);
+        List<SkuItemVo.SkuItemSaleAttrVo> saleAttrsBySpuId = skuSaleAttrValueDao.getSaleAttrsBySpuId(13L);
+        System.out.println(saleAttrsBySpuId);
+    }
 
     @Test
     public void testRedisson() {

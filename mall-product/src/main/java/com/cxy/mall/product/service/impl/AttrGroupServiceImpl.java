@@ -1,6 +1,7 @@
 package com.cxy.mall.product.service.impl;
 
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
+import com.cxy.mall.product.vo.SpuItemAttrGroupVo;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -57,6 +58,13 @@ public class AttrGroupServiceImpl extends ServiceImpl<AttrGroupDao, AttrGroupEnt
     public List<AttrGroupEntity> getGroupIdsByCatelogId(Long catelogId) {
         List<AttrGroupEntity> groupEntities = this.baseMapper.selectList(new QueryWrapper<AttrGroupEntity>().eq("catelog_id", catelogId));
         return groupEntities;
+    }
+
+    @Override
+    public List<SpuItemAttrGroupVo> getAttrGroupWithAttrsBySpuId(Long spuId, Long catalogId) {
+        AttrGroupDao baseMapper = this.getBaseMapper();
+        List<SpuItemAttrGroupVo> vos = baseMapper.getAttrGroupWithAttrsBySpuId(spuId, catalogId);
+        return vos;
     }
 
 }

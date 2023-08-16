@@ -3,6 +3,7 @@ package com.cxy.mall.product.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.cxy.common.utils.PageUtils;
 import com.cxy.mall.product.entity.AttrGroupEntity;
+import com.cxy.mall.product.vo.SpuItemAttrGroupVo;
 
 import java.util.List;
 import java.util.Map;
@@ -21,5 +22,7 @@ public interface AttrGroupService extends IService<AttrGroupEntity> {
     PageUtils queryPage(Map<String, Object> params, Long catelogId);
 
     List<AttrGroupEntity> getGroupIdsByCatelogId(Long catelogId);
+
+    List<SpuItemAttrGroupVo> getAttrGroupWithAttrsBySpuId(Long spuId, Long catalogId);
 }
 
