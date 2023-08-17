@@ -5,7 +5,7 @@
 	<meta charset="UTF-8">
 	<title></title>
 	<link rel="stylesheet" type="text/css" href="/static/item/scss/shop.css"/>
-	<link rel="stylesheet" type="text/css" href="/static/item/scss/jd.css"/>
+<!--	<link rel="stylesheet" type="text/css" href="/static/item/scss/jd.css"/>-->
 	<link rel="stylesheet" href="/static/item/scss/header.css"/>
 	<link rel="stylesheet" type="text/css" href="/static/item/bootstrap/css/bootstrap.css"/>
 </head>
@@ -613,11 +613,16 @@
                             skuId 同时设置一个class 在列表中包含的设置为选中 否则不选中
                             -->
 							<dt>选择[[${attr.attrName}]]</dt>
-							<dd th:each="val:${#strings.listSplit(attr.attrValues,',')}">
-								<!--									<dd th:each="val:${(attr.attrValues)}">-->
-								<a href="/static/item/#">
-									[[${val}]]
+							<!--							<dd th:each="val:${#strings.listSplit(attr.attrValues,',')}">-->
+							<dd th:each="vals:${(attr.attrValues)}">
+								<a th:attr="skus=${vals.skuIds},class=${#lists.contains(#strings.listSplit(vals.skuIds,','),
+										item.info.skuId.toString())? 'sku_attr_value checked':'sku_attr_value'}">
+									[[${vals.attrValue}]]
 								</a>
+								<!--									<dd th:each="val:${(attr.attrValues)}">-->
+								<!--								<a href="/static/item/#">-->
+								<!--									[[${val}]]-->
+								<!--								</a>-->
 							</dd>
 						</dl>
 					</div>
@@ -1057,10 +1062,10 @@
 </div>
 <div class="headera">
 	<div class="Logo-tu">
-		<span><img src="/static/item/img/service_items_1.png"/></span>
-		<span><img src="/static/item/img/service_items_2.png"/></span>
-		<span><img src="/static/item/img/service_items_3.png"/></span>
-		<span><img src="/static/item/img/service_items_4.png"/></span>
+		<!--		<span><img src="/static/item/img/service_items_1.png"/></span>-->
+		<!--		<span><img src="/static/item/img/service_items_2.png"/></span>-->
+		<!--		<span><img src="/static/item/img/service_items_3.png"/></span>-->
+		<!--		<span><img src="/static/item/img/service_items_4.png"/></span>-->
 	</div>
 	<div class="table">
 		<dl>
@@ -1273,6 +1278,38 @@
 <script src="/static/item/js/jquery1.9.js" type="text/javascript" charset="utf-8"></script>
 <script src="/static/item/js/js.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript">
+	$(".sku_attr_value").click(function () {
+		//1、点击元素先添加自定义的属性 为了识别我们是刚刚点击的
+		var skus = new Array();
+		$(this).addClass("clicked");
+		//属性skus以逗号拆分
+		var curr = $(this).attr("skus").split(",");
+		//当前被点击的所有sku组合数据放进去
+		skus.push(curr);
+		//去掉同一行的所有的checked
+		/**
+		 * parent 父类 中查询 拥有class的 然后删除调 checked
+		 */
+		$(this).parent().parent().find(".sku_attr_value").removeClass("checked");
+
+		//2、取出他们的交集 得到skuId 用到的是 filter求交集
+		var filterEle = skus[0]
+		for (var i = 1; i < skus.length; i++) {
+			filterEle = $(filterEle).filter(skus[i]);
+		}
+		//spuId
+		console.log(filterEle[0])
+
+		location.href = "http://item.gulimall.com/" + filterEle[0] + ".html";
+		//4、跳转页面
+	})
+
+	$(function () {
+		//页面初始化 给父类id设置样式
+		$(".sku_attr_value").parent().css({"border": "solid 1px #CCC"});
+		//class里面有对应样式的父类设置样式 checked 表示选中
+		$("a[class = 'sku_attr_value checked']").parent().css({"border": "1px solid red"});
+	})
 </script>
 
 </html>

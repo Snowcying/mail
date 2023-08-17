@@ -33,6 +33,6 @@ public class SkuItemVo {
     public static class SkuItemSaleAttrVo {
         private Long attrId;
         private String attrName;
-        private String attrValues;
+        private List<AttrValueWithSkuIdVo> attrValues;
     }
 }

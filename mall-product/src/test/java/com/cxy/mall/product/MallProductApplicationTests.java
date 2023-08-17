@@ -24,6 +24,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.FileNotFoundException;
 import java.util.*;
+import java.util.concurrent.ExecutionException;
 
 @Slf4j
 @RunWith(SpringRunner.class)
@@ -69,6 +70,21 @@ class MallProductApplicationTests {
 
     @Autowired
     SkuSaleAttrValueDao skuSaleAttrValueDao;
+
+
+    @Test
+    public void testThreadPool() throws ExecutionException, InterruptedException {
+//        long[] time=new long[100];
+        for (int i = 0; i < 1; i++) {
+            long start = System.currentTimeMillis();
+            SkuItemVo item = skuInfoService.item(46L);
+            long end = System.currentTimeMillis();
+//            time[i]=end-start;
+            System.out.println("花费时间" + (end - start));
+        }
+
+
+    }
 
     @Test
     public void testMyBs() {
